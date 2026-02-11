@@ -1,14 +1,16 @@
-﻿namespace Domain.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Application.Dtos
 {
-    public class InvoiceItem
+    public class InvoiceItemDto
     {
-        public int Id { get; set; }
-        public int InvoiceId { get; set; }
         public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal Quantity { get; set; }
         public decimal Subtotal { get; set; }
-        // Navegación
-        public Invoice Invoice { get; set; }
     }
 }

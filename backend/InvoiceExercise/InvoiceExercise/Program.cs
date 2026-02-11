@@ -22,11 +22,15 @@ builder.Services.AddCors(options =>
                 .AllowAnyMethod();
         });
 });
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-builder.Services.AddScoped<InvoicesServices>();
+
 builder.Services.AddScoped<IInvoicesJson, JsonInvoicesResorce>();
 builder.Services.AddScoped<IInvoiceRepository, InvoicesRepository>();
+builder.Services.AddScoped<ICreditNoteRepository, CreditNoteRepository>();
+builder.Services.AddScoped<InvoicesServices>();
+builder.Services.AddScoped<CreditNoteServices>();
 
 var app = builder.Build();
 
@@ -41,6 +45,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
 app.UseCors("APEXReact");
 
 app.Run();

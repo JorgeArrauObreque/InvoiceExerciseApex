@@ -1,25 +1,49 @@
-﻿namespace Domain.Models
+﻿using Domain.Enums;
+using System.ComponentModel.DataAnnotations;
+
+namespace Domain.Models
 {
     public class Invoice
     {
-        public int Id { get; set; }
-        public int InvoiceNumber { get; set; } // Único
+        [Key] 
+        public int InvoiceNumber { get; set; }
         public DateTime InvoiceDate { get; set; }
         public decimal TotalAmount { get; set; }
         public int DaysToDue { get; set; }
-        public DateTime PaymentDueDate { get; set; }
+        public DateTime? PaymentDueDate { get; set; }
 
-        // Customer info (desnormalizado por simplicidad)
-        public string CustomerRun { get; set; }
-        public string CustomerName { get; set; }
-        public string CustomerEmail { get; set; }
+        public string CustomerRun { get; set; } = string.Empty;
+        public string CustomerName { get; set; } = string.Empty;
+        public string CustomerEmail { get; set; } = string.Empty;
 
-        // Consistencia calculada al importar
         public bool IsConsistent { get; set; }
 
-        // Relaciones
+        // FKs
         public ICollection<InvoiceItem> Items { get; set; } = new List<InvoiceItem>();
         public ICollection<CreditNote> CreditNotes { get; set; } = new List<CreditNote>();
         public Payment? Payment { get; set; }
+        public string Status {get;set;}
+        public string StatusPayment { get; set;}
+        public string CalculateStatus()
+        {
+            if (CreditNotes == null || !CreditNotes.Any())
+                return InvoiceStatus.Issued.ToString();
+
+            decimal totalNC = CreditNotes.Sum(cn => cn.CreditNoteAmount);
+            return totalNC == TotalAmount ? InvoiceStatus.Cancelled.ToString() : InvoiceStatus.Partial.ToString();
+        }
+
+        public string CalculatePaymentStatus()
+        {
+            if (Payment != null) return Enums.PaymentStatus.Paid.ToString();
+
+            DateTime limitDate = (PaymentDueDate.HasValue && PaymentDueDate.Value != DateTime.MinValue)
+                ? PaymentDueDate.Value
+                : InvoiceDate.AddDays(DaysToDue);
+
+            return DateTime.Now > limitDate
+                ? Enums.PaymentStatus.Overdue.ToString()
+                : Enums.PaymentStatus.Pending.ToString();
+        }
     }
 }

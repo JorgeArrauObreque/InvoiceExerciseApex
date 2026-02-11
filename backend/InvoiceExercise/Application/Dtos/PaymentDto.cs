@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Application.Dtos
 {
-    public class RootJsonDto
+    public class PaymentDto
     {
-        public List<InvoiceJsonDto> invoices { get; set; }
-
+        public string? PaymentMethod { get; set; }
+        public DateTime? PaymentDate { get; set; }
     }
 }

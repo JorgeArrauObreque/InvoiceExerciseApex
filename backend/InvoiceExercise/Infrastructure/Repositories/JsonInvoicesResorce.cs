@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using Application.Dtos.Json;
 using Application.Interfaces;
 using System.Text.Json;
 
@@ -41,5 +41,6 @@ namespace InvoiceExercise.Infrastructure.Repositories
             writer.WriteStringValue(value);
         }
     }
+
 
 }

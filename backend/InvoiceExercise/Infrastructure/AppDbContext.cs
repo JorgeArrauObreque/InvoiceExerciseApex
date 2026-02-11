@@ -1,5 +1,8 @@
 ﻿using Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using System.Runtime;
 
 namespace InvoiceExercise.Infrastructure
 {
@@ -20,7 +23,7 @@ namespace InvoiceExercise.Infrastructure
             // facturas
             modelBuilder.Entity<Invoice>(entity =>
             {
-                entity.HasKey(e => e.Id);
+                entity.HasKey(e => e.InvoiceNumber);
                 entity.Property(e => e.InvoiceNumber).IsRequired();
                 entity.HasIndex(e => e.InvoiceNumber).IsUnique();
 
@@ -64,8 +67,8 @@ namespace InvoiceExercise.Infrastructure
             // Configuración de las notas de crédito
             modelBuilder.Entity<CreditNote>(entity =>
             {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.CreditNoteNumber).IsRequired().HasMaxLength(50);
+                entity.HasKey(e => e.CreditNoteNumber);
+                entity.Property(e => e.CreditNoteNumber).IsRequired();
                 entity.Property(e => e.CreditNoteDate).IsRequired();
                 entity.Property(e => e.CreditNoteAmount).HasColumnType("decimal(18,2)").IsRequired();
 

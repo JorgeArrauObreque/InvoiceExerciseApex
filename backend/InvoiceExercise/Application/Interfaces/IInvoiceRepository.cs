@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Domain.Enums;
+using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,11 @@ namespace Application.Interfaces
     public interface IInvoiceRepository
     {
         Task<bool> AddRangeAsync(IEnumerable<Invoice> invoices);
+        Task<Invoice> GetInvoiceByNumber(long invoice_number);
+        Task<List<Invoice>> GetInvoiceByStatus(InvoiceStatus status);
+        Task<List<Invoice>> GetInvoiceByStatusPayments(PaymentStatus status_payments);
+        Task<List<Invoice>> GetOverdue30NoPayNoCn();
+        Task<List<(string Status, int Count, decimal Percent)>> GetPayStatusSummary();
+        Task<List<Invoice>> GetInconsistent();
     }
 }

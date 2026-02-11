@@ -1,5 +1,4 @@
-﻿using Application.Dtos.Json;
-using Domain.Models;
+﻿using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface IInvoicesJson
+    public interface ICreditNoteRepository
     {
-        List<InvoiceJsonDto> ReadInvoices(string filePath);
+        Task<CreditNote> AddCreditNoteInvoice(CreditNote note);
     }
 }

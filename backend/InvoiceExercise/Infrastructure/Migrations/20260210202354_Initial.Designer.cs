@@ -3,21 +3,24 @@ using System;
 using InvoiceExercise.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace InvoiceExercise.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260210202354_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.23");
 
-            modelBuilder.Entity("InvoiceExercise.Domain.Models.CreditNote", b =>
+            modelBuilder.Entity("Domain.Models.CreditNote", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,9 +49,9 @@ namespace InvoiceExercise.Migrations
                     b.ToTable("CreditNotes");
                 });
 
-            modelBuilder.Entity("InvoiceExercise.Domain.Models.Invoice", b =>
+            modelBuilder.Entity("Domain.Models.Invoice", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("InvoiceNumber")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -73,9 +76,6 @@ namespace InvoiceExercise.Migrations
                     b.Property<DateTime>("InvoiceDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("InvoiceNumber")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("IsConsistent")
                         .HasColumnType("INTEGER");
 
@@ -85,7 +85,7 @@ namespace InvoiceExercise.Migrations
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("Id");
+                    b.HasKey("InvoiceNumber");
 
                     b.HasIndex("InvoiceNumber")
                         .IsUnique();
@@ -93,7 +93,7 @@ namespace InvoiceExercise.Migrations
                     b.ToTable("Invoices");
                 });
 
-            modelBuilder.Entity("InvoiceExercise.Domain.Models.InvoiceItem", b =>
+            modelBuilder.Entity("Domain.Models.InvoiceItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -123,7 +123,7 @@ namespace InvoiceExercise.Migrations
                     b.ToTable("InvoiceItems");
                 });
 
-            modelBuilder.Entity("InvoiceExercise.Domain.Models.Payment", b =>
+            modelBuilder.Entity("Domain.Models.Payment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -147,9 +147,9 @@ namespace InvoiceExercise.Migrations
                     b.ToTable("Payments");
                 });
 
-            modelBuilder.Entity("InvoiceExercise.Domain.Models.CreditNote", b =>
+            modelBuilder.Entity("Domain.Models.CreditNote", b =>
                 {
-                    b.HasOne("InvoiceExercise.Domain.Models.Invoice", "Invoice")
+                    b.HasOne("Domain.Models.Invoice", "Invoice")
                         .WithMany("CreditNotes")
                         .HasForeignKey("InvoiceId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -158,9 +158,9 @@ namespace InvoiceExercise.Migrations
                     b.Navigation("Invoice");
                 });
 
-            modelBuilder.Entity("InvoiceExercise.Domain.Models.InvoiceItem", b =>
+            modelBuilder.Entity("Domain.Models.InvoiceItem", b =>
                 {
-                    b.HasOne("InvoiceExercise.Domain.Models.Invoice", "Invoice")
+                    b.HasOne("Domain.Models.Invoice", "Invoice")
                         .WithMany("Items")
                         .HasForeignKey("InvoiceId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -169,18 +169,18 @@ namespace InvoiceExercise.Migrations
                     b.Navigation("Invoice");
                 });
 
-            modelBuilder.Entity("InvoiceExercise.Domain.Models.Payment", b =>
+            modelBuilder.Entity("Domain.Models.Payment", b =>
                 {
-                    b.HasOne("InvoiceExercise.Domain.Models.Invoice", "Invoice")
+                    b.HasOne("Domain.Models.Invoice", "Invoice")
                         .WithOne("Payment")
-                        .HasForeignKey("InvoiceExercise.Domain.Models.Payment", "InvoiceId")
+                        .HasForeignKey("Domain.Models.Payment", "InvoiceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Invoice");
                 });
 
-            modelBuilder.Entity("InvoiceExercise.Domain.Models.Invoice", b =>
+            modelBuilder.Entity("Domain.Models.Invoice", b =>
                 {
                     b.Navigation("CreditNotes");
 

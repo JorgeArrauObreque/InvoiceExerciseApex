@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Application.Dtos
+namespace Application.Dtos.Json
 {
     public class CreditNoteJsonDto
     {
@@ -16,7 +16,7 @@ namespace Application.Dtos
         public DateTime credit_note_date { get; set; }
         public decimal credit_note_amount { get; set; }
     }
-    public class IntToStringConverter : System.Text.Json.Serialization.JsonConverter<string>
+    public class IntToStringConverter : JsonConverter<string>
     {
         public override string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {

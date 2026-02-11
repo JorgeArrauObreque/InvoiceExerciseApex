@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace InvoiceExercise.Migrations
+namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,9 +15,8 @@ namespace InvoiceExercise.Migrations
                 name: "Invoices",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    InvoiceNumber = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    InvoiceNumber = table.Column<int>(type: "INTEGER", nullable: false),
                     InvoiceDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DaysToDue = table.Column<int>(type: "INTEGER", nullable: false),
@@ -29,7 +28,7 @@ namespace InvoiceExercise.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Invoices", x => x.Id);
+                    table.PrimaryKey("PK_Invoices", x => x.InvoiceNumber);
                 });
 
             migrationBuilder.CreateTable(
@@ -50,7 +49,7 @@ namespace InvoiceExercise.Migrations
                         name: "FK_CreditNotes_Invoices_InvoiceId",
                         column: x => x.InvoiceId,
                         principalTable: "Invoices",
-                        principalColumn: "Id",
+                        principalColumn: "InvoiceNumber",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -73,7 +72,7 @@ namespace InvoiceExercise.Migrations
                         name: "FK_InvoiceItems_Invoices_InvoiceId",
                         column: x => x.InvoiceId,
                         principalTable: "Invoices",
-                        principalColumn: "Id",
+                        principalColumn: "InvoiceNumber",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -94,7 +93,7 @@ namespace InvoiceExercise.Migrations
                         name: "FK_Payments_Invoices_InvoiceId",
                         column: x => x.InvoiceId,
                         principalTable: "Invoices",
-                        principalColumn: "Id",
+                        principalColumn: "InvoiceNumber",
                         onDelete: ReferentialAction.Cascade);
                 });
 

@@ -1,10 +1,13 @@
-﻿namespace Domain.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Domain.Models
 {
     public class CreditNote
     {
-        public int Id { get; set; }
+        [Key]
+        public long CreditNoteNumber { get; set; }
         public int InvoiceId { get; set; }
-        public string CreditNoteNumber { get; set; }
+       
         public DateTime CreditNoteDate { get; set; }
         public decimal CreditNoteAmount { get; set; }
 
