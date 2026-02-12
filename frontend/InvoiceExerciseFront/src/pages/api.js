@@ -22,43 +22,56 @@ export const getInvoicesByStatusPayment = async (statusPayment) => {
   return response.data;
 };
 
-export const searchInvoices = async (filters) => {
+export const findInvoiceByNumber = async (invoiceNumber) => {
+  if (!invoiceNumber) return [];
   try {
-    let result;
-    if (filters.invoiceNumber) {
-      result = await getInvoicesByNumber(filters.invoiceNumber);
-    } else if (filters.invoiceStatus) {
-      result = await getInvoicesByStatus(filters.invoiceStatus);
-    } else if (filters.paymentStatus) {
-      result = await getInvoicesByStatusPayment(filters.paymentStatus);
-    } else {
-      return [];
-    }
-
+    const result = await getInvoicesByNumber(invoiceNumber);
     if (Array.isArray(result)) {
       return result;
     }
     return result ? [result] : [];
   } catch (error) {
-    console.error("Error fetching invoices:", error);
+    if (error.response && error.response.status === 404) {
+        return [];
+    }
+    console.error("Error fetching invoice by number:", error);
     throw error;
   }
 };
 
-export const getReports = async () => {
+export const findInvoicesByStatus = async ({ paymentStatus, invoiceStatus }) => {
   try {
-    const response = await api.get('/reports');
-    return response.data;
+    if (invoiceStatus) {
+        return await getInvoicesByStatus(invoiceStatus);
+    }
+    if (paymentStatus) {
+        return await getInvoicesByStatusPayment(paymentStatus);
+    }
+    return [];
   } catch (error) {
-    console.error("Error fetching reports:", error);
+    console.error("Error fetching invoices by status:", error);
     throw error;
   }
+};
+
+export const getOverdueReport = async () => {
+  const response = await api.get('/reports/overdue-30');
+  return response.data;
+};
+
+export const getPaymentStatusSummary = async () => {
+  const response = await api.get('/reports/pay-status-summary');
+  return response.data;
+};
+
+export const getInconsistentReport = async () => {
+  const response = await api.get('/reports/inconsistent');
+  return response.data;
 };
 
 export const createCreditNote = async (creditNoteData) => {
     try {
         const payload = {
-            CreditNoteNumber: Number(creditNoteData.creditNoteNumber),
             Amount: Number(creditNoteData.amount),
             Invoice: Number(creditNoteData.invoiceNumber)
         };

@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import InvoiceSearchPanel from '../components/InvoiceSearchPanel';
+import InvoiceStatusSearch from '../components/InvoiceStatusSearch';
 import InvoiceResultsTable from '../components/InvoiceResultsTable';
-import { searchInvoices } from './api';
+import { findInvoicesByStatus } from './api';
 
-export default function Facturas() {
-  const [filters, setFilters] = useState({
-    invoiceNumber: '',
+export default function BusquedaPorEstado() {
+  const [statusFilters, setStatusFilters] = useState({
     paymentStatus: '',
     invoiceStatus: ''
   });
@@ -13,19 +12,20 @@ export default function Facturas() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
 
-  const handleFilterChange = (e) => {
+  const handleStatusFilterChange = (e) => {
     const { name, value } = e.target;
-    setFilters(prev => ({ ...prev, [name]: value }));
+    setStatusFilters(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSearch = async () => {
+  const handleStatusSearch = async () => {
     setIsLoading(true);
     setHasSearched(true);
     try {
-      const data = await searchInvoices(filters);
+      const data = await findInvoicesByStatus(statusFilters);
       setResults(data);
     } catch (error) {
       console.error("Error al buscar facturas:", error);
+      setResults([]);
     } finally {
       setIsLoading(false);
     }
@@ -33,10 +33,11 @@ export default function Facturas() {
 
   return (
     <div className="space-y-6">
-      <InvoiceSearchPanel 
-        filters={filters}
-        onFilterChange={handleFilterChange}
-        onSearch={handleSearch}
+      <h1 className="text-2xl font-bold text-slate-800">Búsqueda por Estado</h1>
+      <InvoiceStatusSearch
+        filters={statusFilters}
+        onFilterChange={handleStatusFilterChange}
+        onSearch={handleStatusSearch}
       />
       <div className="bg-white p-6 rounded-lg shadow-md border border-slate-200">
         <h2 className="text-lg font-semibold text-slate-800">Resultados</h2>
@@ -44,7 +45,7 @@ export default function Facturas() {
           <InvoiceResultsTable invoices={results} isLoading={isLoading} />
         ) : (
           <div className="text-center p-10 text-slate-500">
-            Utilice los filtros para iniciar una búsqueda.
+            Seleccione filtros para buscar.
           </div>
         )}
       </div>

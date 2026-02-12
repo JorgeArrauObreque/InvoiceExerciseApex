@@ -1,4 +1,5 @@
-﻿using Domain.Enums;
+﻿using Application.Dtos;
+using Domain.Enums;
 using Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Application.Interfaces
         Task<List<Invoice>> GetInvoiceByStatus(InvoiceStatus status);
         Task<List<Invoice>> GetInvoiceByStatusPayments(PaymentStatus status_payments);
         Task<List<Invoice>> GetOverdue30NoPayNoCn();
-        Task<List<(string Status, int Count, decimal Percent)>> GetPayStatusSummary();
+        Task<List<PayStatusSummaryItem>> GetPayStatusSummary();
         Task<List<Invoice>> GetInconsistent();
     }
 }

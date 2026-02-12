@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InvoiceExercise.Controllers
 {
+    /// <summary>
+    /// Endpoints de reportes.
+    /// </summary>
     [Route("api/reports")]
     [ApiController]
     public class ReportsController : ControllerBase
@@ -14,20 +17,23 @@ namespace InvoiceExercise.Controllers
         {
             _invoicesServices = invoiceService;
         }
-
+        /// <summary>Obtiene facturas vencidas ~30 días.</summary>
+        /// <remarks>Retorna la lista de facturas que cumplen la condición de vencimiento.</remarks>
         [HttpGet("overdue-30")]
         public async Task<IActionResult> Overdue30()
         {
             return Ok(await _invoicesServices.GetOverdue());
         }
-
-        [HttpGet("payment-status")]
-        public async Task<IActionResult> PaymentStatus()
+        /// <summary>Resumen por estado de pago.</summary>
+        /// <remarks>Devuelve conteo y porcentaje para Paid/Overdue/Pending.</remarks>
+        [HttpGet("pay-status-summary")]
+        public async Task<ActionResult<List<(string Status, int Count, decimal Percent)>>> GetPayStatusSummary()
         {
-     
-            return Ok(await _invoicesServices.ObtainsPayStatusSummary());
+            var rows = await _invoicesServices.ObtainsPayStatusSummary();
+            return Ok(rows);
         }
-
+        /// <summary>Obtiene facturas inconsistentes.</summary>
+        /// <remarks>Retorna facturas con datos inválidos/inconsistentes según validaciones del negocio.</remarks>
         [HttpGet("inconsistent")]
         public async Task<IActionResult> Inconsistent()
         {

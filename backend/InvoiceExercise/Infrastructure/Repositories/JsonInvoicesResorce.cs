@@ -13,7 +13,6 @@ namespace InvoiceExercise.Infrastructure.Repositories
 
             var jsonString = File.ReadAllText(filePath);
 
-            // Case-insensitive para asegurar match con el JSON
             var options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
@@ -24,7 +23,20 @@ namespace InvoiceExercise.Infrastructure.Repositories
             var root = JsonSerializer.Deserialize<RootJsonDto>(jsonString, options);
             return root?.invoices ?? new List<InvoiceJsonDto>();
         }
+        public async Task<List<InvoiceJsonDto>> ReadInvoicesJsonFile(Stream file)
+        {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.AllowReadingFromString |
+                                 System.Text.Json.Serialization.JsonNumberHandling.WriteAsString
+            };
+
+            var root = await JsonSerializer.DeserializeAsync<RootJsonDto>(file, options);
+            return root?.invoices ?? new List<InvoiceJsonDto>();
+        }
     }
+
     public class IntToStringConverter : System.Text.Json.Serialization.JsonConverter<string>
     {
         public override string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

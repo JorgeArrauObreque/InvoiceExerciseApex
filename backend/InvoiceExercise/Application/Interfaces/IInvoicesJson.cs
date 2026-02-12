@@ -11,5 +11,7 @@ namespace Application.Interfaces
     public interface IInvoicesJson
     {
         List<InvoiceJsonDto> ReadInvoices(string filePath);
+        Task<List<InvoiceJsonDto>> ReadInvoicesJsonFile(Stream file);
+
     }
 }

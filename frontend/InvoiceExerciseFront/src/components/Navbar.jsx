@@ -15,7 +15,8 @@ export default function Navbar() {
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
                 <Link to="/" className="hover:bg-slate-700 px-3 py-2 rounded-md text-sm font-medium transition-colors">Inicio</Link>
-                <Link to="/facturas" className="hover:bg-slate-700 px-3 py-2 rounded-md text-sm font-medium transition-colors">Facturas</Link>
+                <Link to="/busqueda-numero" className="hover:bg-slate-700 px-3 py-2 rounded-md text-sm font-medium transition-colors">Buscar Nº</Link>
+                <Link to="/busqueda-estado" className="hover:bg-slate-700 px-3 py-2 rounded-md text-sm font-medium transition-colors">Buscar Estado</Link>
                 <Link to="/reportes" className="hover:bg-slate-700 px-3 py-2 rounded-md text-sm font-medium transition-colors">Reportes</Link>
               </div>
             </div>

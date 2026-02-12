@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InvoiceExercise.Controllers
 {
+    /// <summary>
+    /// Endpoints de notas de crédito.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class CreditNotesController : ControllerBase
@@ -15,6 +18,9 @@ namespace InvoiceExercise.Controllers
         {
             _services = services;
         }
+        /// <summary>
+        /// Endpoints de reportes.
+        /// </summary>
         [HttpPost("create_credit_note")]
         public async Task<IActionResult> CreateCreditNote([FromBody] CreditNoteView note)
         {
@@ -29,7 +35,6 @@ namespace InvoiceExercise.Controllers
 
                 return BadRequest(e.Message);
             }
-
         }
     }
 }

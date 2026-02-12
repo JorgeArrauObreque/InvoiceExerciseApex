@@ -22,22 +22,6 @@ export default function CreateCreditNote({ formData, onFormChange, onSubmit, isS
         </div>
 
         <div>
-          <label htmlFor="creditNoteNumber" className="block text-sm font-medium text-slate-700 mb-1">
-            Número de Nota de Crédito
-          </label>
-          <input
-            type="number"
-            name="creditNoteNumber"
-            id="creditNoteNumber"
-            value={formData.creditNoteNumber}
-            onChange={onFormChange}
-            className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-            placeholder="Ej: 12345"
-            required
-          />
-        </div>
-
-        <div>
           <label htmlFor="amount" className="block text-sm font-medium text-slate-700 mb-1">
             Monto
           </label>

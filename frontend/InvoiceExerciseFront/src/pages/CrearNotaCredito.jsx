@@ -12,7 +12,6 @@ export default function CrearNotaCredito() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     invoiceNumber: '',
-    creditNoteNumber: '',
     amount: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
