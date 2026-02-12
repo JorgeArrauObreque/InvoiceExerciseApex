@@ -8,7 +8,18 @@ Sistema web para gestionar facturas, importarlas desde un archivo JSON en tiempo
 
 Implementar un sistema web para gestionar facturas integrando datos desde un archivo JSON, persistiendo en base de datos y permitiendo su administración mediante una interfaz intuitiva. 
 
+
 ---
+##  ----------- Notas Importante --------------------------
+
+para generar  un usuario, en swagger existe un **endpoint(/api/Auth/register)** donde puede crear el usuario con los parametros que se necesite. 
+de igual manera, **se deja una base de datos sqllite** en la base del repositorio, llamado invoices.db y este lo coloque en la raiz de la api invoiceExercise junto con program, con eso no es necesario realizar migracion(update-database) las credenciales de este son:
+
+
+------
+user: test
+password: test
+------
 
 ## Stack tecnológico
 
