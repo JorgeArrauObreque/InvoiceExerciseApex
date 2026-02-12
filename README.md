@@ -57,7 +57,7 @@ Búsqueda de facturas por:
 ## Decisiones de diseño / buenas prácticas
 
 ### Arquitectura
-Separación por capas tipo Clean Architecture / modular monolith (Domain / Application / Infrastructure / Web) para mantener el dominio y casos de uso aislados de infraestructura y presentación.
+Separación por capas tipo Clean Architecture / modular monolith (Domain / Application / Infrastructure / Web) para mantener el dominio y casos de uso aislados de infraestructura y presentación(API).
 
 ### Contratos de API (DTOs)
 Para endpoints de reportes se usan DTOs/`record` (por ejemplo `PayStatusSummaryItem`) en lugar de tuplas, para evitar respuestas JSON inestables como `[{},{},{}]` y mantener un contrato claro.
@@ -135,7 +135,9 @@ builder.Services.AddSwaggerGen(c =>
    Aplica las migraciones para generar el archivo `invoices.db`. Elige una opción:
 
    **Opción A (.NET CLI):**
+   asegurate estar en la ruta **InvoiceExerciseApex\backend\InvoiceExercise**
    ```bash
+    dotnet tool install --global dotnet-ef
     dotnet ef database update --project Infrastructure --startup-project InvoiceExercise   
    ```
    **Opción B (Package Manager Console - Visual Studio):**
@@ -144,6 +146,8 @@ builder.Services.AddSwaggerGen(c =>
    ```
 
 4. Ejecuta el proyecto WebAPI:
+
+  al igual que los anteriores comandos, asegurate estar en la ruta **InvoiceExerciseApex\backend\InvoiceExercise**
 
 ```bash
 dotnet restore
