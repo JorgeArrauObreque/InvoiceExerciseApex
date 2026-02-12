@@ -120,6 +120,11 @@ builder.Services.AddSwaggerGen(c =>
      "ConnectionStrings": {
        "DefaultConnection": "Data Source=invoices.db"
      },
+    "Jwt": {
+      "Key": "iBBbjzliMAhbMNtk6152wJc/9BYROV2CdPQBBlaGJhVZ734MwBmwf8VfsTJE8yQkV89fgsIVcQzjkGGQOD7NRg==",
+      "Issuer": "InvoiceExercise",
+      "Audience": "InvoiceExerciseUsers"
+    },
      "Logging": {
        "LogLevel": {
          "Default": "Information",
