@@ -34,7 +34,7 @@ export const findInvoiceByNumber = async (invoiceNumber) => {
     if (error.response && error.response.status === 404) {
         return [];
     }
-    console.error("Error fetching invoice by number:", error);
+    console.error("Error al obtener la factura por número:", error);
     throw error;
   }
 };
@@ -49,7 +49,7 @@ export const findInvoicesByStatus = async ({ paymentStatus, invoiceStatus }) => 
     }
     return [];
   } catch (error) {
-    console.error("Error fetching invoices by status:", error);
+    console.error("Error al obtener facturas por estado:", error);
     throw error;
   }
 };
@@ -78,7 +78,7 @@ export const createCreditNote = async (creditNoteData) => {
         const response = await api.post('/CreditNotes/create_credit_note', payload);
         return response.data;
     } catch (error) {
-        console.error("Error creating credit note:", error);
+        console.error("Error al crear la nota de crédito:", error);
         throw error;
     }
 };
