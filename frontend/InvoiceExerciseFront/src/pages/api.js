@@ -7,6 +7,15 @@ const api = axios.create({
   },
 });
 
+// Interceptor para agregar el Token JWT a cada petición
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 export const getInvoicesByNumber = async (invoiceNumber) => {
   const response = await api.get('/Invoices/get_invoices_by_number', { params: { invoice_number: invoiceNumber } });
   return response.data;
@@ -92,4 +101,9 @@ export const importInvoices = async (file) => {
         }
     });
     return response.data;
+};
+
+export const login = async (credentials) => {
+  const response = await api.post('/Auth/login', credentials);
+  return response.data;
 };

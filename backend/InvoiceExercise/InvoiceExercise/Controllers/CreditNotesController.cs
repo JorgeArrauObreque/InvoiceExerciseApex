@@ -1,6 +1,7 @@
 ﻿using Application;
 using Application.Dtos;
 using InvoiceExercise.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,8 @@ namespace InvoiceExercise.Controllers
     /// <summary>
     /// Endpoints de notas de crédito.
     /// </summary>
+    /// 
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CreditNotesController : ControllerBase

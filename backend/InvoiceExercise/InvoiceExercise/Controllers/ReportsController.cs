@@ -1,5 +1,6 @@
 ﻿using Application;
 using Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace InvoiceExercise.Controllers
     /// <summary>
     /// Endpoints de reportes.
     /// </summary>
+    [Authorize]
     [Route("api/reports")]
     [ApiController]
     public class ReportsController : ControllerBase

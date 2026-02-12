@@ -16,10 +16,19 @@ namespace InvoiceExercise.Infrastructure
         public DbSet<InvoiceItem> InvoiceItems { get; set; }
         public DbSet<CreditNote> CreditNotes { get; set; }
         public DbSet<Payment> Payments { get; set; }
-
+        public DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            //usuarios
+            modelBuilder.Entity<User>(e =>
+            {
+                e.ToTable("Users");
+                e.HasKey(u => u.Id);
+                e.Property(u => u.Username).IsRequired().HasMaxLength(50);
+                e.Property(u => u.PasswordHash).IsRequired();
+                e.Property(u => u.Role).IsRequired().HasMaxLength(20);
+            });
             // facturas
             modelBuilder.Entity<Invoice>(entity =>
             {

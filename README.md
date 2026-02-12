@@ -197,3 +197,9 @@ Si estás usando Vite, normalmente se define como `VITE_API_URL` (ej. `VITE_API_
 Si el frontend (ej. `localhost:5173`) llama al backend en otro puerto, el navegador puede bloquear por CORS si no lo permites en la API.
 
 Si te pasa, habilita CORS en el backend para el origen del frontend (ej. `http://localhost:5173`), en caso que se cambie el puerto, con .WithOrigins("http://localhost:5173") con el puerto correspondiente en program.cs (WEBAPI).
+
+
+
+### 5) Notas de crédito
+
+para crear notas de crédito para alguna factura, realice la busqueda por cualquiera de los filtros y en la fila le aparecera la opcion de generar nota de crédito

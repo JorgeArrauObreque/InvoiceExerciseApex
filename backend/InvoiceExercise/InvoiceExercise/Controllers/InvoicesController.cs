@@ -3,6 +3,8 @@ using Application.Dtos;
 using Application.Dtos.Json;
 using Application.Exceptions;
 using Domain.Enums;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.Sqlite;
@@ -14,6 +16,8 @@ namespace InvoiceExercise.Controllers
     /// <summary>
     /// Endpoints de facturas.
     /// </summary>
+    /// 
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class InvoicesController : ControllerBase
@@ -29,6 +33,7 @@ namespace InvoiceExercise.Controllers
         /// </remarks>
         /// <param name="file">Archivo JSON con facturas.</param>
         [HttpPost("Import")]
+       
         public async Task<IActionResult> ImportInvoicesFromJson(IFormFile file)
         {
             try
