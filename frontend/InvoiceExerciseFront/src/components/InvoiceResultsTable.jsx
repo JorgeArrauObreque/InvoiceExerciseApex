@@ -9,6 +9,15 @@ export default function InvoiceResultsTable({ invoices, isLoading }) {
     return <div className="text-center p-10 text-slate-500">No se encontraron resultados.</div>;
   }
 
+  const statusTranslations = {
+    Paid: 'Pagada',
+    Pending: 'Pendiente',
+    Overdue: 'Vencida',
+    Issued: 'Emitida',
+    Partial: 'Parcial',
+    Cancelled: 'Cancelada'
+  };
+
   const getStatusBadge = (status) => {
     const baseClasses = "px-2 py-1 text-xs font-medium rounded-full";
     switch (status) {
@@ -52,10 +61,10 @@ export default function InvoiceResultsTable({ invoices, isLoading }) {
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{invoice.customerName}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">${invoice.totalAmount.toLocaleString('es-CL')}</td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      <span className={getStatusBadge(invoice.statusPayment)}>{invoice.statusPayment}</span>
+                      <span className={getStatusBadge(invoice.statusPayment)}>{statusTranslations[invoice.statusPayment] || invoice.statusPayment}</span>
                     </td>
                     <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                      <span className={getStatusBadge(invoice.status)}>{invoice.status}</span>
+                      <span className={getStatusBadge(invoice.status)}>{statusTranslations[invoice.status] || invoice.status}</span>
                     </td>
                     <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                       <Link to={`/notas-credito/crear?invoiceNumber=${invoice.invoiceNumber}`} className="text-indigo-600 hover:text-indigo-900">

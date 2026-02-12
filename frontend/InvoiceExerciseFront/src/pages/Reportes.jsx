@@ -9,6 +9,24 @@ export default function Reportes() {
   });
   const [isLoading, setIsLoading] = useState(true);
 
+  const calculateDaysOverdue = (dueDate) => {
+    if (!dueDate) return 0;
+    const due = new Date(dueDate);
+    const today = new Date();
+    const diffTime = today - due;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays > 0 ? diffDays : 0;
+  };
+
+  const statusTranslations = {
+    Paid: 'Pagada',
+    Pending: 'Pendiente',
+    Overdue: 'Vencida',
+    Issued: 'Emitida',
+    Partial: 'Parcial',
+    Cancelled: 'Cancelada'
+  };
+
   useEffect(() => {
     const fetchReports = async () => {
       setIsLoading(true);
@@ -49,7 +67,7 @@ export default function Reportes() {
                 <p className="font-medium text-slate-800">{inv.invoiceNumber} ({inv.customerName})</p>
                 <p className="text-sm text-slate-500">Monto: ${inv.totalAmount.toLocaleString('es-CL')}</p>
               </div>
-              <span className="text-sm font-bold text-red-600">{inv.daysToDue} días vencida</span>
+              <span className="text-sm font-bold text-red-600">{calculateDaysOverdue(inv.paymentDueDate)} días vencida</span>
             </li>
           ))}
         </ul>
@@ -60,7 +78,7 @@ export default function Reportes() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
           {reports.statusSummary.map((item) => (
             <div key={item.status} className="bg-slate-50 p-4 rounded-lg">
-              <p className="text-sm font-medium text-slate-500">{item.status}</p>
+              <p className="text-sm font-medium text-slate-500">{statusTranslations[item.status] || item.status}</p>
               <p className="text-2xl font-bold text-slate-800">{item.count}</p>
               <p className="text-sm text-slate-600">{item.percent.toFixed(2)}%</p>
             </div>

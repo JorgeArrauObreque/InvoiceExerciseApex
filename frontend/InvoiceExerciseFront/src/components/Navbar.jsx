@@ -18,6 +18,7 @@ export default function Navbar() {
                 <Link to="/busqueda-numero" className="hover:bg-slate-700 px-3 py-2 rounded-md text-sm font-medium transition-colors">Buscar Nº</Link>
                 <Link to="/busqueda-estado" className="hover:bg-slate-700 px-3 py-2 rounded-md text-sm font-medium transition-colors">Buscar Estado</Link>
                 <Link to="/reportes" className="hover:bg-slate-700 px-3 py-2 rounded-md text-sm font-medium transition-colors">Reportes</Link>
+                <Link to="/cargar-facturas" className="hover:bg-slate-700 px-3 py-2 rounded-md text-sm font-medium transition-colors">Importar</Link>
               </div>
             </div>
           </div>
@@ -45,7 +46,6 @@ export default function Navbar() {
                     tabIndex="-1"
                   >
                     <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Perfil</Link>
-                    <Link to="/cargar-facturas" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Cargar JSON</Link>
                     <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Cerrar Sesión</Link>
                   </div>
                 )}
