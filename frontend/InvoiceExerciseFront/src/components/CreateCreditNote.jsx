@@ -1,4 +1,4 @@
-export default function CreateCreditNote({ formData, onFormChange, onSubmit, isSubmitting, message }) {
+export default function CreateCreditNote({ register, errors, onSubmit, isSubmitting, message }) {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md border border-slate-200 h-fit">
       <h2 className="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
@@ -11,14 +11,12 @@ export default function CreateCreditNote({ formData, onFormChange, onSubmit, isS
           </label>
           <input
             type="text"
-            name="invoiceNumber"
             id="ncInvoiceNumber"
-            value={formData.invoiceNumber}
-            onChange={onFormChange}
+            {...register("invoiceNumber", { required: "El número de factura es obligatorio" })}
             className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
             placeholder="Buscar número de factura..."
-            required
           />
+          {errors.invoiceNumber && <p className="text-red-500 text-xs mt-1">{errors.invoiceNumber.message}</p>}
         </div>
 
         <div>
@@ -31,16 +29,14 @@ export default function CreateCreditNote({ formData, onFormChange, onSubmit, isS
             </div>
             <input
               type="number"
-              name="amount"
               id="amount"
-              value={formData.amount}
-              onChange={onFormChange}
+              {...register("amount", { required: "El monto es obligatorio" })}
               className="w-full rounded-md border border-gray-300 bg-white pl-7 pr-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
               placeholder="0.00"
               step="0.01"
-              required
             />
           </div>
+          {errors.amount && <p className="text-red-500 text-xs mt-1">{errors.amount.message}</p>}
           <p className="mt-1 text-xs text-gray-500">
             * El monto no puede superar el saldo pendiente.
           </p>

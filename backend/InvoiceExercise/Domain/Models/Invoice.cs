@@ -35,15 +35,14 @@ namespace Domain.Models
 
         public string CalculatePaymentStatus()
         {
-            if (Payment != null) return Enums.PaymentStatus.Paid.ToString();
+            if (Payment != null)
+                return PaymentStatus.Paid.ToString();
 
-            DateTime limitDate = (PaymentDueDate.HasValue && PaymentDueDate.Value != DateTime.MinValue)
-                ? PaymentDueDate.Value
-                : InvoiceDate.AddDays(DaysToDue);
+            DateTime limitDate = PaymentDueDate ?? InvoiceDate.AddDays(DaysToDue);
 
             return DateTime.Now > limitDate
-                ? Enums.PaymentStatus.Overdue.ToString()
-                : Enums.PaymentStatus.Pending.ToString();
+                ? PaymentStatus.Overdue.ToString()
+                : PaymentStatus.Pending.ToString();
         }
     }
 }

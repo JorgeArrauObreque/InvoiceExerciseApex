@@ -1,24 +1,17 @@
-export default function InvoiceStatusSearch({ onSearch, filters, onFilterChange }) {
-  const handleSearch = (e) => {
-    e.preventDefault();
-    onSearch();
-  };
-
+export default function InvoiceStatusSearch({ onSearch, register, errors }) {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md border border-slate-200">
       <h2 className="text-lg font-semibold text-slate-800 mb-4">
         Búsqueda por Estado
       </h2>
-      <form onSubmit={handleSearch} className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+      <form onSubmit={onSearch} className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
         <div>
           <label htmlFor="paymentStatus" className="block text-sm font-medium text-slate-700 mb-1">
             Estado de Pago
           </label>
           <select
-            name="paymentStatus"
             id="paymentStatus"
-            value={filters.paymentStatus}
-            onChange={onFilterChange}
+            {...register("paymentStatus")}
             className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           >
             <option value="">Seleccione...</option>
@@ -33,10 +26,8 @@ export default function InvoiceStatusSearch({ onSearch, filters, onFilterChange 
             Estado Comercial
           </label>
           <select
-            name="invoiceStatus"
             id="invoiceStatus"
-            value={filters.invoiceStatus}
-            onChange={onFilterChange}
+            {...register("invoiceStatus")}
             className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
           >
             <option value="">Seleccione...</option>
@@ -54,6 +45,7 @@ export default function InvoiceStatusSearch({ onSearch, filters, onFilterChange 
             Buscar
           </button>
         </div>
+        {errors.root && <p className="col-span-full text-red-500 text-sm mt-2">{errors.root.message}</p>}
       </form>
     </div>
   );

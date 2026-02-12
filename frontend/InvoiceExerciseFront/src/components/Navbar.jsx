@@ -45,7 +45,7 @@ export default function Navbar() {
                     tabIndex="-1"
                   >
                     <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Perfil</Link>
-                    <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Cargar JSON</Link>
+                    <Link to="/cargar-facturas" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Cargar JSON</Link>
                     <Link to="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Cerrar Sesión</Link>
                   </div>
                 )}

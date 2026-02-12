@@ -1,20 +1,21 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import InvoiceNumberSearch from '../components/InvoiceNumberSearch';
 import InvoiceResultsTable from '../components/InvoiceResultsTable';
 import { findInvoiceByNumber } from './api';
 
 export default function BusquedaPorNumero() {
-  const [numberFilter, setNumberFilter] = useState('');
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
 
-  const handleNumberSearch = async () => {
+  const handleNumberSearch = async (data) => {
     setIsLoading(true);
     setHasSearched(true);
     try {
-      const data = await findInvoiceByNumber(numberFilter);
-      setResults(data);
+      const resultData = await findInvoiceByNumber(data.invoiceNumber);
+      setResults(resultData);
     } catch (error) {
       console.error("Error al buscar facturas:", error);
       setResults([]);
@@ -27,9 +28,9 @@ export default function BusquedaPorNumero() {
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-slate-800">Búsqueda por Número</h1>
       <InvoiceNumberSearch
-        filter={numberFilter}
-        onFilterChange={setNumberFilter}
-        onSearch={handleNumberSearch}
+        register={register}
+        errors={errors}
+        onSearch={handleSubmit(handleNumberSearch)}
       />
       <div className="bg-white p-6 rounded-lg shadow-md border border-slate-200">
         <h2 className="text-lg font-semibold text-slate-800">Resultados</h2>

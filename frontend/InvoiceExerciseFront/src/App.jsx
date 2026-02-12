@@ -5,6 +5,7 @@ import BusquedaPorNumero from './pages/BusquedaPorNumero';
 import BusquedaPorEstado from './pages/BusquedaPorEstado';
 import Reportes from './pages/Reportes';
 import CrearNotaCredito from './pages/CrearNotaCredito';
+import CargarFacturas from './pages/CargarFacturas';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/busqueda-estado" element={<BusquedaPorEstado />} />
             <Route path="/reportes" element={<Reportes />} />
             <Route path="/notas-credito/crear" element={<CrearNotaCredito />} />
+            <Route path="/cargar-facturas" element={<CargarFacturas />} />
             <Route path="*" element={<div className="text-center"><h2>404: Página no encontrada</h2></div>} />
           </Routes>
         </div>

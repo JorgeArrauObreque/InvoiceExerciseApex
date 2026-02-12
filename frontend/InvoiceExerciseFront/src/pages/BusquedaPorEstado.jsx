@@ -1,28 +1,27 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 import InvoiceStatusSearch from '../components/InvoiceStatusSearch';
 import InvoiceResultsTable from '../components/InvoiceResultsTable';
 import { findInvoicesByStatus } from './api';
 
 export default function BusquedaPorEstado() {
-  const [statusFilters, setStatusFilters] = useState({
-    paymentStatus: '',
-    invoiceStatus: ''
-  });
+  const { register, handleSubmit, setError, clearErrors, formState: { errors } } = useForm();
   const [results, setResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
 
-  const handleStatusFilterChange = (e) => {
-    const { name, value } = e.target;
-    setStatusFilters(prev => ({ ...prev, [name]: value }));
-  };
+  const handleStatusSearch = async (data) => {
+    if (!data.paymentStatus && !data.invoiceStatus) {
+      setError('root', { type: 'manual', message: 'Debe seleccionar al menos un criterio de búsqueda.' });
+      return;
+    }
+    clearErrors('root');
 
-  const handleStatusSearch = async () => {
     setIsLoading(true);
     setHasSearched(true);
     try {
-      const data = await findInvoicesByStatus(statusFilters);
-      setResults(data);
+      const resultData = await findInvoicesByStatus(data);
+      setResults(resultData);
     } catch (error) {
       console.error("Error al buscar facturas:", error);
       setResults([]);
@@ -35,9 +34,9 @@ export default function BusquedaPorEstado() {
     <div className="space-y-6">
       <h1 className="text-2xl font-bold text-slate-800">Búsqueda por Estado</h1>
       <InvoiceStatusSearch
-        filters={statusFilters}
-        onFilterChange={handleStatusFilterChange}
-        onSearch={handleStatusSearch}
+        register={register}
+        errors={errors}
+        onSearch={handleSubmit(handleStatusSearch)}
       />
       <div className="bg-white p-6 rounded-lg shadow-md border border-slate-200">
         <h2 className="text-lg font-semibold text-slate-800">Resultados</h2>

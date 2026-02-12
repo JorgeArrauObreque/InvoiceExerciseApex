@@ -81,4 +81,15 @@ export const createCreditNote = async (creditNoteData) => {
         console.error("Error creating credit note:", error);
         throw error;
     }
-}
+};
+
+export const importInvoices = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    const response = await api.post('/Invoices/Import', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+    return response.data;
+};
